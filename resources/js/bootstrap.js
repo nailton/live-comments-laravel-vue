@@ -7,8 +7,20 @@ window._ = require('lodash');
  */
 
 window.axios = require('axios');
+window.moment = require('moment');
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
+window.axios.defaults.headers.common.crossdomain = true;
+window.axios.defaults.baseURL = '/api';
+
+let token = document.head.querySelector('meta[name="csrf-token"]');
+
+if (token) {
+    window.axios.defaults.headers.common['X-CSRF-TOKEN'] = token.content;
+} else {
+    console.error('CSRF token no found: http://adonisjs.com/docs/4.1/csrf');
+}
 
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
@@ -18,7 +30,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
 // import Echo from 'laravel-echo';
 
-// window.Pusher = require('pusher-js');
+window.Pusher = require('pusher-js');
 
 // window.Echo = new Echo({
 //     broadcaster: 'pusher',
