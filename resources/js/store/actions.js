@@ -11,10 +11,12 @@ let actions = {
         })
     },
 
-    GET_COMMENT({commit}){
+    GET_COMMENTS({commit}){
         axios.get('/comments')
         .then(res => {
+            {
             commit('GET_COMMENTS', res.data)
+            }
         })
         .catch(err => {
             console.log(err)

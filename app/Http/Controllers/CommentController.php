@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
+use App\Events\CommentEvent;
 use Illuminate\Http\Request;
 
 class CommentController extends Controller {
@@ -10,13 +12,13 @@ class CommentController extends Controller {
         return view('comments');
     }
 
-    public function fetchCommetns() {
-        $comments = COmments::all();
+    public function fetchComments() {
+        $comments = Comment::all();
         return response()->json($comments);
     }
 
     public function store(Request $request) {
-        $comment - Commeent::create($request->all());
+        $comment = Comment::create($request->all());
 
         event(new CommentEvent($comment));
         return response()->json('ok');

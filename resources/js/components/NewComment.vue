@@ -14,7 +14,7 @@
                 </div>
             </div>
             <div class="control has-margin-top">
-                <button style="background-color: #47b784" :class="{'is-loading': submit}" class="button has-shadow is-medium has-text-white" :disabled="!isValid" @click.prevent="postComment" type="submit"></button>
+                <button style="background-color: #47b784" :class="{'is-loading': submit}" class="button has-shadow is-medium has-text-white" :disabled="!isValid" @click.prevent="postComment" type="submit">Comentar</button>
             </div>
         </form>
     </div>
@@ -35,10 +35,11 @@ export default {
         postComment() {
             this.submit = true;
             this.$store.dispatch('ADD_COMMENT', this.comment)
-            this.submit = false;
-            if (response.data === 'ok')
-                console.log('success')
-                .catch(err => {
+                .then(response => {
+                    this.submit = false;
+                    if (response.data === 'ok')
+                        console.log('success')
+                }).catch(err => {
                     this.submit = false
                 })
         }
@@ -55,4 +56,5 @@ export default {
 .has-margin-top {
     margin-top: 15px;
 }
+
 </style>

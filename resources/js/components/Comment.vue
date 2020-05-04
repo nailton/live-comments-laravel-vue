@@ -15,12 +15,17 @@
 export default {
     name: "Comment",
     props: ['comment'],
-    computed: {
+    data(){
+        return{
+            author: ''
+        }
+    },
+    methods: {
         posted_at() {
             return moment(this.comment.created_at).format('MMMM Do YYYY')
         },
         avatar() {
-            return `https://api.adrable.io/avatars/48/${this.comment.author}@adorable.io.png`
+            return `https://api.adorable.io/avatars/48/asdf@adorable.io.png`;
         }
     }
 }
