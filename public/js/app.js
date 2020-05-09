@@ -1713,17 +1713,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Comment",
   props: ['comment'],
-  data: function data() {
-    return {
-      author: ''
-    };
-  },
-  methods: {
+  computed: {
     posted_at: function posted_at() {
       return moment(this.comment.created_at).format('MMMM Do YYYY');
     },
     avatar: function avatar() {
-      return "https://api.adorable.io/avatars/48/asdf@adorable.io.png";
+      return "https://api.adorable.io/avatars/48/".concat(this.comment.author, "@adorable.io.png");
     }
   }
 });
@@ -1739,7 +1734,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1761,13 +1756,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   components: {
     Comment: _Comment__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
-  moutend: function moutend() {
+  mounted: function mounted() {
     var _this = this;
 
     this.$store.dispatch('GET_COMMENTS');
-    var pusher = new Pusher("YOUR_PUSHER_APP_ID", {
-      cluster: "YOUR_PUSHER_CLUSTER",
-      encrypted: false
+    console.log(process.env.PUSHER_APP_ID);
+    console.log(process.env.PUSHER_APP_CLUSTER);
+    Pusher.logToConsole = true;
+    var pusher = new Pusher(process.env.PUSHER_APP_ID, {
+      cluster: process.env.PUSHER_APP_CLUSTER,
+      encrypted: true
     });
     var channel = pusher.subscribe('comment-channel');
     channel.bind('new-comment', function (data) {
@@ -1776,6 +1774,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['comments']))
 });
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -46708,7 +46707,7 @@ var render = function() {
     _c("div", { staticClass: "msg has-shadow" }, [
       _c("div", { staticClass: "msg-body" }, [
         _c("p", { staticClass: "name" }, [
-          _vm._v(_vm._s(_vm.comment.author) + " "),
+          _vm._v(_vm._s(_vm.comment.author)),
           _c("span", { staticClass: "date" }, [_vm._v(_vm._s(_vm.posted_at))])
         ]),
         _vm._v(" "),
@@ -60158,17 +60157,25 @@ module.exports = function(module) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(vue__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _components_Comment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/Comment */ "./resources/js/components/Comment.vue");
+/* harmony import */ var _components_Comments__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/Comments */ "./resources/js/components/Comments.vue");
+/* harmony import */ var _components_NewComment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/NewComment */ "./resources/js/components/NewComment.vue");
+/* harmony import */ var _store_index__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./store/index */ "./resources/js/store/index.js");
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
-window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
-Vue.component('comment', __webpack_require__(/*! ./components/Comment */ "./resources/js/components/Comment.vue")["default"]);
-Vue.component('comments', __webpack_require__(/*! ./components/Comments */ "./resources/js/components/Comments.vue")["default"]);
-Vue.component('new-comment', __webpack_require__(/*! ./components/NewComment */ "./resources/js/components/NewComment.vue")["default"]);
-var app = new Vue({
+
+
+
+
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('comment', _components_Comment__WEBPACK_IMPORTED_MODULE_1__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('comments', _components_Comments__WEBPACK_IMPORTED_MODULE_2__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_0___default.a.component('new-comment', _components_NewComment__WEBPACK_IMPORTED_MODULE_3__["default"]);
+var app = new vue__WEBPACK_IMPORTED_MODULE_0___default.a({
   el: '#app',
-  store: _store_index__WEBPACK_IMPORTED_MODULE_0__["default"]
+  store: _store_index__WEBPACK_IMPORTED_MODULE_4__["default"]
 });
 
 /***/ }),
@@ -60492,6 +60499,7 @@ var actions = {
     var commit = _ref.commit;
     return new Promise(function (resolve, reject) {
       axios.post("/comments", comment).then(function (response) {
+        console.log(response);
         resolve(response);
       })["catch"](function (err) {
         reject(err);
@@ -60502,6 +60510,7 @@ var actions = {
     var commit = _ref2.commit;
     axios.get('/comments').then(function (res) {
       {
+        console.log(res.data);
         commit('GET_COMMENTS', res.data);
       }
     })["catch"](function (err) {

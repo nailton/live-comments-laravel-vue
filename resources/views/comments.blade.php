@@ -44,7 +44,7 @@
                     <a href="#commentForm" class="button is-medium has-shadow has-text-white" style="background-color: #47b784;">Comentário</a>
                 </div>
                 <br><br>
-                <comment></comment>
+                <comments></comments>
                 <new-comment></new-comment>
             </div>
         </div>

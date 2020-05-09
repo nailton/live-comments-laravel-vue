@@ -14,7 +14,7 @@ class CommentController extends Controller {
 
     public function fetchComments() {
         $comments = Comment::all();
-        return response()->json($comments);
+        return $comments;
     }
 
     public function store(Request $request) {

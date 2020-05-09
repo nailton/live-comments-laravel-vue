@@ -5,7 +5,7 @@
         </div>
         <div class="msg has-shadow">
             <div class="msg-body">
-                <p class="name">{{ comment.author }} <span class="date">{{ posted_at }}</span></p>
+                <p class="name">{{ comment.author }}<span class="date">{{ posted_at }}</span></p>
                 <p class="content">{{ comment.content }}</p>
             </div>
         </div>
@@ -15,17 +15,12 @@
 export default {
     name: "Comment",
     props: ['comment'],
-    data(){
-        return{
-            author: ''
-        }
-    },
-    methods: {
+    computed: {
         posted_at() {
             return moment(this.comment.created_at).format('MMMM Do YYYY')
         },
         avatar() {
-            return `https://api.adorable.io/avatars/48/asdf@adorable.io.png`;
+            return `https://api.adorable.io/avatars/48/${this.comment.author}@adorable.io.png`;
         }
     }
 }

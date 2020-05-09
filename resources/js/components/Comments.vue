@@ -12,12 +12,15 @@ import Comment from './Comment'
 export default {
     name: "Comments",
     components: { Comment },
-    moutend() {
-        this.$store.dispatch('GET_COMMENTS')
+    mounted() {
+        this.$store.dispatch('GET_COMMENTS');
+        console.log(process.env.PUSHER_APP_ID);
+        console.log(process.env.PUSHER_APP_CLUSTER);
+        Pusher.logToConsole = true;
 
-        let pusher = new Pusher(`YOUR_PUSHER_APP_ID`, {
-            cluster: `YOUR_PUSHER_CLUSTER`,
-            encrypted: false
+        let pusher = new Pusher(process.env.PUSHER_APP_ID, {
+            cluster: process.env.PUSHER_APP_CLUSTER,
+            encrypted: true
         });
 
         let channel = pusher.subscribe('comment-channel')

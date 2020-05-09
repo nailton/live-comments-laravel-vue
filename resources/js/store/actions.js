@@ -4,6 +4,7 @@ let actions = {
         return new Promise((resolve, reject) => {
             axios.post(`/comments`, comment)
             .then(response => {
+                console.log(response)
                 resolve(response)
             }).catch(err => {
                 reject(err)
@@ -15,6 +16,7 @@ let actions = {
         axios.get('/comments')
         .then(res => {
             {
+                console.log(res.data)
             commit('GET_COMMENTS', res.data)
             }
         })

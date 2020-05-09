@@ -13,9 +13,5 @@ use Illuminate\Support\Facades\Route;
 |
  */
 
-Route::get('/', 'CommentController@index');
-
-Route::prefix('api')->group(function () {
-    Route::get('/comments', 'CommentController@fetchComments');
-    Route::post('/comments', 'CommentController@store');
-});
+Route::get('/comments', 'CommentController@fetchComments');
+Route::post('/comments', 'CommentController@store');
