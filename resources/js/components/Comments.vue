@@ -15,7 +15,7 @@ export default {
     mounted() {
         this.$store.dispatch('GET_COMMENTS');
 
-        Pusher.logToConsole = true;
+        Pusher.logToConsole = false;
 
         let pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
             cluster: process.env.MIX_PUSHER_APP_CLUSTER,

@@ -1760,7 +1760,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     var _this = this;
 
     this.$store.dispatch('GET_COMMENTS');
-    Pusher.logToConsole = true;
+    Pusher.logToConsole = false;
     var pusher = new Pusher("bdbbced9b220902ac274", {
       cluster: "us2",
       encrypted: true
