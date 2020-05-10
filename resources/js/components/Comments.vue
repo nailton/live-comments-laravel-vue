@@ -13,7 +13,6 @@ export default {
     name: "Comments",
     components: { Comment },
     mounted() {
-        console.log(this.comments)
         this.$store.dispatch('GET_COMMENTS');
 
         Pusher.logToConsole = true;

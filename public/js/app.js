@@ -1759,7 +1759,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
-    console.log(this.comments);
     this.$store.dispatch('GET_COMMENTS');
     Pusher.logToConsole = true;
     var pusher = new Pusher("bdbbced9b220902ac274", {
@@ -1823,8 +1822,7 @@ __webpack_require__.r(__webpack_exports__);
 
       this.submit = true;
       this.$store.dispatch('ADD_COMMENT', this.comment).then(function (response) {
-        _this.submit = false; // console.log(this.comment.author)
-
+        _this.submit = false;
         if (response.data === 'ok') _this.comment.author = '';
         _this.comment.content = '';
         console.log('success');

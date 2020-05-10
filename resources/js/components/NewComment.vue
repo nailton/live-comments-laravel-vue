@@ -37,7 +37,6 @@ export default {
             this.$store.dispatch('ADD_COMMENT', this.comment)
                 .then(response => {
                     this.submit = false;
-                    // console.log(this.comment.author)
                     if (response.data === 'ok')
                         this.comment.author = ''
                         this.comment.content = ''
