@@ -1734,7 +1734,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(process) {/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var _Comment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Comment */ "./resources/js/components/Comment.vue");
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -1759,12 +1759,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   mounted: function mounted() {
     var _this = this;
 
+    console.log(this.comments);
     this.$store.dispatch('GET_COMMENTS');
-    console.log(process.env.PUSHER_APP_ID);
-    console.log(process.env.PUSHER_APP_CLUSTER);
     Pusher.logToConsole = true;
-    var pusher = new Pusher(process.env.PUSHER_APP_ID, {
-      cluster: process.env.PUSHER_APP_CLUSTER,
+    var pusher = new Pusher("bdbbced9b220902ac274", {
+      cluster: "us2",
       encrypted: true
     });
     var channel = pusher.subscribe('comment-channel');
@@ -1774,7 +1773,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapGetters"])(['comments']))
 });
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../../../node_modules/process/browser.js */ "./node_modules/process/browser.js")))
 
 /***/ }),
 
@@ -1825,8 +1823,11 @@ __webpack_require__.r(__webpack_exports__);
 
       this.submit = true;
       this.$store.dispatch('ADD_COMMENT', this.comment).then(function (response) {
-        _this.submit = false;
-        if (response.data === 'ok') console.log('success');
+        _this.submit = false; // console.log(this.comment.author)
+
+        if (response.data === 'ok') _this.comment.author = '';
+        _this.comment.content = '';
+        console.log('success');
       })["catch"](function (err) {
         _this.submit = false;
       });
@@ -46707,7 +46708,7 @@ var render = function() {
     _c("div", { staticClass: "msg has-shadow" }, [
       _c("div", { staticClass: "msg-body" }, [
         _c("p", { staticClass: "name" }, [
-          _vm._v(_vm._s(_vm.comment.author)),
+          _vm._v(_vm._s(_vm.comment.author) + " "),
           _c("span", { staticClass: "date" }, [_vm._v(_vm._s(_vm.posted_at))])
         ]),
         _vm._v(" "),
@@ -46810,7 +46811,11 @@ var render = function() {
                   }
                 ],
                 staticClass: "input is-medium",
-                attrs: { type: "text", placeholder: "Seu nome" },
+                attrs: {
+                  type: "text",
+                  name: "author",
+                  placeholder: "Seu nome"
+                },
                 domProps: { value: _vm.comment.author },
                 on: {
                   input: function($event) {
@@ -60499,7 +60504,6 @@ var actions = {
     var commit = _ref.commit;
     return new Promise(function (resolve, reject) {
       axios.post("/comments", comment).then(function (response) {
-        console.log(response);
         resolve(response);
       })["catch"](function (err) {
         reject(err);
@@ -60510,7 +60514,6 @@ var actions = {
     var commit = _ref2.commit;
     axios.get('/comments').then(function (res) {
       {
-        console.log(res.data);
         commit('GET_COMMENTS', res.data);
       }
     })["catch"](function (err) {

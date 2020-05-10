@@ -13,13 +13,13 @@ export default {
     name: "Comments",
     components: { Comment },
     mounted() {
+        console.log(this.comments)
         this.$store.dispatch('GET_COMMENTS');
-        console.log(process.env.PUSHER_APP_ID);
-        console.log(process.env.PUSHER_APP_CLUSTER);
+
         Pusher.logToConsole = true;
 
-        let pusher = new Pusher(process.env.PUSHER_APP_ID, {
-            cluster: process.env.PUSHER_APP_CLUSTER,
+        let pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY, {
+            cluster: process.env.MIX_PUSHER_APP_CLUSTER,
             encrypted: true
         });
 

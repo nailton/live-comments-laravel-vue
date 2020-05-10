@@ -5,7 +5,7 @@
         </div>
         <div class="msg has-shadow">
             <div class="msg-body">
-                <p class="name">{{ comment.author }}<span class="date">{{ posted_at }}</span></p>
+                <p class="name">{{ comment.author }} <span class="date">{{ posted_at }}</span></p>
                 <p class="content">{{ comment.content }}</p>
             </div>
         </div>
