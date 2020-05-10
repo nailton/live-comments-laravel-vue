@@ -46816,6 +46816,15 @@ var render = function() {
                 },
                 domProps: { value: _vm.comment.author },
                 on: {
+                  keyup: function($event) {
+                    if (
+                      !$event.type.indexOf("key") &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    $event.stopPropagation()
+                  },
                   input: function($event) {
                     if ($event.target.composing) {
                       return

@@ -4,7 +4,7 @@
             <div class="field has-margin-top">
                 <label class="label">Seu nome</label>
                 <div class="control">
-                    <input type="text" name="author" v-model="comment.author" class="input is-medium" placeholder="Seu nome">
+                    <input type="text" name="author" v-model="comment.author" class="input is-medium" placeholder="Seu nome"  @keyup.enter.stop>
                 </div>
             </div>
             <div class="field has-margin-top">
